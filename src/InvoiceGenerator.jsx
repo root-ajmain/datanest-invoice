@@ -18,14 +18,19 @@ const fmtBDT = (n) => {
 
 // ─── Brand palette ────────────────────────────────────────────
 const C = {
-  navy: "#2B3D6B", green: "#4DB88A", teal: "#3A9E7A",
-  border: "#DDE6F0", text: "#22304A", muted: "#5F7494",
-  light: "#F5F8FC", paid: "#E6F7F0",
+  navy:   "#1A3A5C",
+  green:  "#2EAD7A",
+  teal:   "#1A9E8A",
+  border: "#C8D8E8",
+  text:   "#1A2E45",
+  muted:  "#5A7896",
+  light:  "#EEF5FC",
+  paid:   "#E4F6EF",
+  appBg:  "#E6EEF8",
 };
 
-// ─── Fonts ────────────────────────────────────────────────────
-const FONT_PIXEL = "'Pixelify Sans', monospace";
-const FONT_SLAB  = "'Roboto Slab', Georgia, serif";
+// ─── Font ─────────────────────────────────────────────────────
+const FONT = "'Tektur', sans-serif";
 
 // ─── T&C ───────────────────────────────────────────────────────
 const TC = [
@@ -55,51 +60,52 @@ function willOverflow(itemCount, hasNotes) {
 const S = {
   app: {
     display: "flex", gap: 20, padding: 20, minHeight: "100vh",
-    background: "#E4EAF4", fontFamily: "'Segoe UI',system-ui,sans-serif",
+    background: C.appBg, fontFamily: FONT,
     boxSizing: "border-box", alignItems: "flex-start",
   },
   panel: {
-    flex: "0 0 40%", minWidth: 300, maxWidth: 520, background: "#fff", borderRadius: 12, padding: 20,
-    boxShadow: "0 2px 20px rgba(43,61,107,0.12)",
+    flex: "0 0 40%", minWidth: 300, maxWidth: 520, background: "#fff", borderRadius: 14, padding: 22,
+    boxShadow: "0 4px 24px rgba(26,58,92,0.10)",
     maxHeight: "calc(100vh - 40px)", overflowY: "auto",
     boxSizing: "border-box", position: "sticky", top: 20,
   },
   panelHead: {
-    fontWeight: 800, fontSize: 14, color: C.navy,
+    fontWeight: 800, fontSize: 15, color: C.navy, fontFamily: FONT,
     borderBottom: "2.5px solid " + C.green,
-    paddingBottom: 10, marginBottom: 6,
-    display: "flex", alignItems: "center", gap: 7,
+    paddingBottom: 11, marginBottom: 8,
+    display: "flex", alignItems: "center", gap: 8,
   },
   sec: {
-    fontSize: 10, fontWeight: 800, color: C.navy,
-    textTransform: "uppercase", letterSpacing: 1.2,
+    fontSize: 10, fontWeight: 800, color: C.navy, fontFamily: FONT,
+    textTransform: "uppercase", letterSpacing: 1.4,
     borderBottom: "1.5px solid " + C.border,
-    paddingBottom: 5, marginTop: 18, marginBottom: 8,
+    paddingBottom: 5, marginTop: 20, marginBottom: 9,
   },
   lbl: {
-    display: "block", fontSize: 9.5, fontWeight: 700, color: C.muted,
-    textTransform: "uppercase", letterSpacing: 0.7,
+    display: "block", fontSize: 9.5, fontWeight: 700, color: C.muted, fontFamily: FONT,
+    textTransform: "uppercase", letterSpacing: 0.8,
     marginBottom: 3, marginTop: 10,
   },
   inp: {
-    width: "100%", padding: "7px 9px",
-    border: "1.5px solid " + C.border, borderRadius: 6,
+    width: "100%", padding: "8px 10px",
+    border: "1.5px solid " + C.border, borderRadius: 7,
     fontSize: 12, color: C.text, boxSizing: "border-box",
-    outline: "none", background: "#FAFBFD",
+    outline: "none", background: "#F8FBFF", fontFamily: FONT,
   },
   itemBox: {
     background: C.light, border: "1px solid " + C.border,
-    borderRadius: 7, padding: "9px 9px 7px", marginBottom: 7,
+    borderRadius: 9, padding: "10px 10px 8px", marginBottom: 8,
   },
   addBtn: {
     background: C.green, color: "#fff", border: "none",
-    borderRadius: 6, padding: "6px 14px", fontSize: 11,
-    fontWeight: 700, cursor: "pointer", marginTop: 6,
+    borderRadius: 7, padding: "7px 16px", fontSize: 11,
+    fontWeight: 700, cursor: "pointer", marginTop: 6, fontFamily: FONT,
+    letterSpacing: 0.4,
   },
   rmBtn: {
-    background: "#FEF0EE", color: "#C0392B", border: "none",
-    borderRadius: 4, padding: "3px 7px", fontSize: 10,
-    fontWeight: 700, cursor: "pointer",
+    background: "#FDECEA", color: "#C0392B", border: "none",
+    borderRadius: 5, padding: "3px 8px", fontSize: 10,
+    fontWeight: 700, cursor: "pointer", fontFamily: FONT,
   },
 };
 
@@ -160,14 +166,14 @@ function InvoicePreview({ d }) {
         paddingLeft: 60, paddingRight: 55,
         boxSizing: "border-box", height: "100%",
         overflow: "visible",
-        fontFamily: "'Segoe UI',system-ui,sans-serif",
+        fontFamily: FONT,
         display: "flex", flexDirection: "column",
       }}>
 
         {/* 1. INVOICE meta — right aligned */}
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
           <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: 36, fontWeight: 900, color: C.navy, letterSpacing: 2, lineHeight: 1, marginBottom: 6, fontFamily: FONT_PIXEL }}>
+            <div style={{ fontSize: 36, fontWeight: 900, color: C.navy, letterSpacing: 2, lineHeight: 1, marginBottom: 6, fontFamily: FONT }}>
               {docType === "quotation" ? "QUOTATION" : "INVOICE"}
             </div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 4, background: C.light, border: "1px solid " + C.border, borderRadius: 4, padding: "3px 12px", fontSize: 12, marginBottom: 5 }}>
@@ -189,7 +195,7 @@ function InvoicePreview({ d }) {
               </div>
             )}
             {paid && (
-              <div style={{ display: "inline-block", marginTop: 5, background: C.paid, color: C.teal, border: "2px solid " + C.green, borderRadius: 4, padding: "3px 12px", fontWeight: 900, fontSize: 12, letterSpacing: 2, fontFamily: FONT_SLAB }}>
+              <div style={{ display: "inline-block", marginTop: 5, background: C.paid, color: C.teal, border: "2px solid " + C.green, borderRadius: 4, padding: "3px 12px", fontWeight: 900, fontSize: 12, letterSpacing: 2, fontFamily: FONT }}>
                 {"✓"} PAID
               </div>
             )}
@@ -200,16 +206,16 @@ function InvoicePreview({ d }) {
 
         {/* 2. Bill To — below INVOICE meta */}
         <div style={{ marginBottom: 8 }}>
-          <div style={{ fontSize: 10, fontWeight: 800, color: C.green, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 4, fontFamily: FONT_PIXEL }}>
+          <div style={{ fontSize: 10, fontWeight: 800, color: C.green, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 4, fontFamily: FONT }}>
             Bill To
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: C.navy, marginBottom: 3, fontFamily: FONT_PIXEL }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: C.navy, marginBottom: 3, fontFamily: FONT }}>
             {client.name || <span style={{ color: C.muted, fontStyle: "italic" }}>Client Name</span>}
           </div>
-          {client.company && <div style={{ fontSize: 13, color: C.text, marginBottom: 2, fontFamily: FONT_SLAB }}>{client.company}</div>}
-          {client.address && <div style={{ fontSize: 12, color: C.muted, marginBottom: 2, fontFamily: FONT_SLAB }}>{client.address}</div>}
-          {client.phone   && <div style={{ fontSize: 12, color: C.muted, marginBottom: 2, fontFamily: FONT_SLAB }}>{client.phone}</div>}
-          {client.email   && <div style={{ fontSize: 12, color: C.muted, fontFamily: FONT_SLAB }}>{client.email}</div>}
+          {client.company && <div style={{ fontSize: 13, color: C.text, marginBottom: 2, fontFamily: FONT }}>{client.company}</div>}
+          {client.address && <div style={{ fontSize: 12, color: C.muted, marginBottom: 2, fontFamily: FONT }}>{client.address}</div>}
+          {client.phone   && <div style={{ fontSize: 12, color: C.muted, marginBottom: 2, fontFamily: FONT }}>{client.phone}</div>}
+          {client.email   && <div style={{ fontSize: 12, color: C.muted, fontFamily: FONT }}>{client.email}</div>}
         </div>
 
         {DIV}
@@ -218,11 +224,11 @@ function InvoicePreview({ d }) {
         <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 8 }}>
           <thead>
             <tr style={{ background: C.navy }}>
-              <th style={th({ borderRadius: "3px 0 0 3px", width: hasItemDisc ? "43%" : "50%", fontFamily: FONT_PIXEL })}>Description</th>
-              <th style={th({ textAlign: "center", width: "8%", fontFamily: FONT_PIXEL })}>Qty</th>
-              <th style={th({ textAlign: "right", width: hasItemDisc ? "18%" : "21%", fontFamily: FONT_PIXEL })}>Unit Price (BDT)</th>
-              {hasItemDisc && <th style={th({ textAlign: "right", width: "10%", fontFamily: FONT_PIXEL })}>Disc%</th>}
-              <th style={th({ textAlign: "right", width: "21%", borderRadius: "0 3px 3px 0", fontFamily: FONT_PIXEL })}>Amount (BDT)</th>
+              <th style={th({ borderRadius: "3px 0 0 3px", width: hasItemDisc ? "43%" : "50%", fontFamily: FONT })}>Description</th>
+              <th style={th({ textAlign: "center", width: "8%", fontFamily: FONT })}>Qty</th>
+              <th style={th({ textAlign: "right", width: hasItemDisc ? "18%" : "21%", fontFamily: FONT })}>Unit Price (BDT)</th>
+              {hasItemDisc && <th style={th({ textAlign: "right", width: "10%", fontFamily: FONT })}>Disc%</th>}
+              <th style={th({ textAlign: "right", width: "21%", borderRadius: "0 3px 3px 0", fontFamily: FONT })}>Amount (BDT)</th>
             </tr>
           </thead>
           <tbody>
@@ -234,13 +240,13 @@ function InvoicePreview({ d }) {
               return (
                 <tr key={item.id ?? i} style={{ background: i % 2 === 0 ? "#F8FBFD" : "#fff" }}>
                   <td style={td({ verticalAlign: item.note ? "top" : "middle" })}>
-                    <div style={{ fontFamily: FONT_SLAB }}>{item.desc || <span style={{ color: C.muted, fontStyle: "italic" }}>—</span>}</div>
-                    {item.note && <div style={{ fontSize: 11, color: C.muted, marginTop: 2, fontFamily: FONT_SLAB, lineHeight: 1.4 }}>{item.note}</div>}
+                    <div style={{ fontFamily: FONT }}>{item.desc || <span style={{ color: C.muted, fontStyle: "italic" }}>—</span>}</div>
+                    {item.note && <div style={{ fontSize: 11, color: C.muted, marginTop: 2, fontFamily: FONT, lineHeight: 1.4 }}>{item.note}</div>}
                   </td>
-                  <td style={td({ textAlign: "center", fontFamily: FONT_SLAB })}>{qty || 0}</td>
-                  <td style={td({ textAlign: "right", fontFamily: FONT_SLAB })}>{fmtBDT(rate)}</td>
-                  {hasItemDisc && <td style={td({ textAlign: "right", color: iDisc > 0 ? "#C0392B" : C.muted, fontFamily: FONT_SLAB })}>{iDisc > 0 ? iDisc + "%" : "—"}</td>}
-                  <td style={td({ textAlign: "right", fontWeight: 600, fontFamily: FONT_SLAB })}>{fmtBDT(amt)}</td>
+                  <td style={td({ textAlign: "center", fontFamily: FONT })}>{qty || 0}</td>
+                  <td style={td({ textAlign: "right", fontFamily: FONT })}>{fmtBDT(rate)}</td>
+                  {hasItemDisc && <td style={td({ textAlign: "right", color: iDisc > 0 ? "#C0392B" : C.muted, fontFamily: FONT })}>{iDisc > 0 ? iDisc + "%" : "—"}</td>}
+                  <td style={td({ textAlign: "right", fontWeight: 600, fontFamily: FONT })}>{fmtBDT(amt)}</td>
                 </tr>
               );
             })}
@@ -269,13 +275,13 @@ function InvoicePreview({ d }) {
 
         {/* 5. Payment Details */}
         <div style={{ border: "1px solid " + C.border, borderRadius: 5, padding: "6px 10px", marginBottom: 8, background: "rgba(248,250,253,0.92)" }}>
-          <div style={{ fontSize: 10, fontWeight: 800, color: C.navy, textTransform: "uppercase", letterSpacing: 1.3, borderBottom: "1px solid " + C.border, paddingBottom: 3, marginBottom: 5, fontFamily: FONT_PIXEL }}>
+          <div style={{ fontSize: 10, fontWeight: 800, color: C.navy, textTransform: "uppercase", letterSpacing: 1.3, borderBottom: "1px solid " + C.border, paddingBottom: 3, marginBottom: 5, fontFamily: FONT }}>
             Payment Details
           </div>
           <div style={{ display: "flex", gap: 14 }}>
             {/* Bank */}
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: C.green, marginBottom: 3, fontFamily: FONT_PIXEL }}>Bank Account</div>
+              <div style={{ fontSize: 10, fontWeight: 700, color: C.green, marginBottom: 3, fontFamily: FONT }}>Bank Account</div>
               {[
                 ["Bank Name",   "The City Bank"],
                 ["Title",       "Ajmain Mahatab Hossain Niloy"],
@@ -283,7 +289,7 @@ function InvoicePreview({ d }) {
                 ["Branch",      "Pallabi"],
                 ["Routing No.", "225263585"],
               ].map(([k, v]) => (
-                <div key={k} style={{ display: "flex", gap: 4, fontSize: 11, marginBottom: 2, fontFamily: FONT_SLAB }}>
+                <div key={k} style={{ display: "flex", gap: 4, fontSize: 11, marginBottom: 2, fontFamily: FONT }}>
                   <span style={{ fontWeight: 600, color: C.text, minWidth: 85, flexShrink: 0 }}>{k}:</span>
                   <span style={{ color: C.muted }}>{v}</span>
                 </div>
@@ -291,13 +297,13 @@ function InvoicePreview({ d }) {
             </div>
             {/* bKash / Nagad + NB */}
             <div style={{ flex: "0 0 200px" }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: C.green, marginBottom: 3, fontFamily: FONT_PIXEL }}>bKash / Nagad</div>
-              <div style={{ fontSize: 11, color: C.muted, marginBottom: 3, fontFamily: FONT_SLAB }}>Personal Account &amp; Send Money</div>
-              <div style={{ display: "flex", gap: 4, fontSize: 11, marginBottom: 6, fontFamily: FONT_SLAB }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: C.green, marginBottom: 3, fontFamily: FONT }}>bKash / Nagad</div>
+              <div style={{ fontSize: 11, color: C.muted, marginBottom: 3, fontFamily: FONT }}>Personal Account &amp; Send Money</div>
+              <div style={{ display: "flex", gap: 4, fontSize: 11, marginBottom: 6, fontFamily: FONT }}>
                 <span style={{ fontWeight: 600, color: C.text }}>Number:</span>
                 <span style={{ color: C.muted }}>01521-111703</span>
               </div>
-              <div style={{ fontSize: 10, color: "#7A5F00", background: "#FFF8E1", border: "1px solid #F0C040", borderRadius: 3, padding: "4px 6px", lineHeight: 1.45, fontFamily: FONT_SLAB }}>
+              <div style={{ fontSize: 10, color: "#7A5F00", background: "#FFF8E1", border: "1px solid #F0C040", borderRadius: 3, padding: "4px 6px", lineHeight: 1.45, fontFamily: FONT }}>
                 <strong>N.B:</strong> Please provide the screenshot in WhatsApp after your Payment.
               </div>
             </div>
@@ -307,18 +313,18 @@ function InvoicePreview({ d }) {
         {/* 6. Notes */}
         {notes && (
           <div style={{ borderLeft: "2.5px solid " + C.green, paddingLeft: 8, paddingTop: 4, paddingBottom: 4, marginBottom: 8, background: "rgba(245,248,252,0.88)", borderRadius: "0 4px 4px 0" }}>
-            <div style={{ fontSize: 10, fontWeight: 800, color: C.green, textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 3, fontFamily: FONT_PIXEL }}>Notes</div>
-            <div style={{ fontSize: 12, color: C.text, lineHeight: 1.5, fontFamily: FONT_SLAB }}>{notes}</div>
+            <div style={{ fontSize: 10, fontWeight: 800, color: C.green, textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 3, fontFamily: FONT }}>Notes</div>
+            <div style={{ fontSize: 12, color: C.text, lineHeight: 1.5, fontFamily: FONT }}>{notes}</div>
           </div>
         )}
 
         {/* 7. Terms & Conditions */}
         <div style={{ border: "1px solid " + C.border, borderRadius: 5, padding: "6px 10px", marginBottom: 8, background: "rgba(248,250,253,0.92)" }}>
-          <div style={{ fontSize: 10, fontWeight: 800, color: C.navy, textTransform: "uppercase", letterSpacing: 1.3, borderBottom: "1px solid " + C.border, paddingBottom: 3, marginBottom: 4, fontFamily: FONT_PIXEL }}>
+          <div style={{ fontSize: 10, fontWeight: 800, color: C.navy, textTransform: "uppercase", letterSpacing: 1.3, borderBottom: "1px solid " + C.border, paddingBottom: 3, marginBottom: 4, fontFamily: FONT }}>
             Prior Terms &amp; Conditions
           </div>
           {TC.map((t, i) => (
-            <div key={i} style={{ display: "flex", gap: 5, marginTop: 3, fontSize: 11, color: C.muted, lineHeight: 1.4, fontFamily: FONT_SLAB }}>
+            <div key={i} style={{ display: "flex", gap: 5, marginTop: 3, fontSize: 11, color: C.muted, lineHeight: 1.4, fontFamily: FONT }}>
               <span style={{ fontWeight: 700, color: C.navy, flexShrink: 0 }}>{i + 1}.</span>
               <span>{t}</span>
             </div>
@@ -330,7 +336,7 @@ function InvoicePreview({ d }) {
 
         {/* 8. Thank you + Signature */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-          <div style={{ fontSize: 11, color: C.muted, fontStyle: "italic", lineHeight: 1.55, fontFamily: FONT_SLAB }}>
+          <div style={{ fontSize: 11, color: C.muted, fontStyle: "italic", lineHeight: 1.55, fontFamily: FONT }}>
             Thank you for your business. For any queries,<br/>
             please contact <span style={{ fontWeight: 700, color: C.navy, fontStyle: "normal" }}>+880 1804-277 420</span>
           </div>
@@ -421,8 +427,12 @@ export default function InvoiceGenerator() {
       const source = document.getElementById("inv-page");
       if (!source) throw new Error("Invoice element not found — try again");
 
-      // Wait for web fonts to fully load
+      // Wait for web fonts and ensure all Tektur weight variants are loaded
       await document.fonts.ready;
+      await Promise.all(
+        ["400 12px Tektur", "600 12px Tektur", "700 12px Tektur", "800 12px Tektur"]
+          .map(f => document.fonts.load(f))
+      );
 
       // ── Core fix: #inv-page lives inside transform:scale(N) container.
       // html2canvas uses getBoundingClientRect() → gets scaled coords → wrong capture.
@@ -443,22 +453,15 @@ export default function InvoiceGenerator() {
       let canvas;
       try {
         canvas = await html2canvas(clone, {
-          scale:                 2,
-          useCORS:               true,
-          backgroundColor:       "#ffffff",
-          logging:               false,
-          width:                 995,
-          height:                1408,
-          windowWidth:           1200,
-          windowHeight:          900,
+          scale:                  2,
+          useCORS:                true,
+          backgroundColor:        "#ffffff",
+          logging:                false,
+          width:                  995,
+          height:                 1408,
+          windowWidth:            1200,
+          windowHeight:           900,
           foreignObjectRendering: false,
-          onclone: (clonedDoc) => {
-            // Drop Google Font <link> tags — fonts already cached in browser.
-            // Prevents html2canvas from re-fetching via CORS and failing.
-            clonedDoc
-              .querySelectorAll('link[href*="fonts.googleapis.com"]')
-              .forEach(n => n.remove());
-          },
         });
       } finally {
         // Always clean up the clone even if html2canvas throws
