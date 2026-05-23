@@ -414,50 +414,71 @@ export default function InvoiceGenerator() {
     setNotes(""); setPaid(false); setGen("idle");
   };
 
-  // FIX-6: Hardcoded A4 px — no dependency on browser zoom/DPI
   const downloadPDF = async () => {
     setGen("loading");
     try {
       consumeNum(inv.number, docType);
-      const el = document.getElementById("inv-page");
-      if (!el) throw new Error("Invoice element not found");
+      const source = document.getElementById("inv-page");
+      if (!source) throw new Error("Invoice element not found — try again");
 
-      // Wait for all web fonts to finish loading before capture
+      // Wait for web fonts to fully load
       await document.fonts.ready;
 
-      const canvas = await html2canvas(el, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-        logging: false,
-        width: 995,
-        height: 1408,
-        windowWidth: 995,
-        windowHeight: 1408,
-        foreignObjectRendering: false,
-        onclone: (_clonedDoc, clonedEl) => {
-          // Remove external font <link> tags from clone — fonts already in browser cache.
-          // Prevents html2canvas from re-fetching Google Fonts via CORS (fails on system-font
-          // fallbacks like Segoe UI that have no fetchable URL).
-          _clonedDoc.querySelectorAll('link[href*="fonts.googleapis.com"], link[href*="fonts.gstatic.com"]')
-            .forEach(n => n.remove());
-          // Ensure PAID badge (if visible) is fully within capture bounds
-          clonedEl.style.overflow = "visible";
-        },
+      // ── Core fix: #inv-page lives inside transform:scale(N) container.
+      // html2canvas uses getBoundingClientRect() → gets scaled coords → wrong capture.
+      // Solution: clone to <body> at scale(1), capture there, then remove.
+      const clone = source.cloneNode(true);
+      Object.assign(clone.style, {
+        position:      "fixed",
+        top:           "0",
+        left:          "0",
+        width:         "995px",
+        height:        "1408px",
+        transform:     "none",
+        opacity:       "0",           // invisible — no visual flash
+        pointerEvents: "none",
+        zIndex:        "-9999",
       });
+      document.body.appendChild(clone);
+
+      let canvas;
+      try {
+        canvas = await html2canvas(clone, {
+          scale:                 2,
+          useCORS:               true,
+          backgroundColor:       "#ffffff",
+          logging:               false,
+          width:                 995,
+          height:                1408,
+          windowWidth:           1200,
+          windowHeight:          900,
+          foreignObjectRendering: false,
+          onclone: (clonedDoc) => {
+            // Drop Google Font <link> tags — fonts already cached in browser.
+            // Prevents html2canvas from re-fetching via CORS and failing.
+            clonedDoc
+              .querySelectorAll('link[href*="fonts.googleapis.com"]')
+              .forEach(n => n.remove());
+          },
+        });
+      } finally {
+        // Always clean up the clone even if html2canvas throws
+        document.body.removeChild(clone);
+      }
 
       const imgData = canvas.toDataURL("image/jpeg", 0.93);
       const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
       pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-      pdf.save("DataNestBD-Invoice-" + (inv.number || "DN-0001") + ".pdf");
-      // Auto-advance invoice number so next download gets a fresh number
+      pdf.save("DataNestBD-" + (inv.number || "DN-0001") + ".pdf");
+
+      // Advance invoice number so next download gets a fresh number
       si("number", peekNextNum(docType));
       setGen("idle");
     } catch (err) {
       console.error("PDF error:", err);
       setPdfErr(err?.message || String(err));
       setGen("error");
-      setTimeout(() => { setGen("idle"); setPdfErr(""); }, 6000);
+      setTimeout(() => { setGen("idle"); setPdfErr(""); }, 8000);
     }
   };
 
