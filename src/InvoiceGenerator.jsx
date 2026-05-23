@@ -431,11 +431,10 @@ export default function InvoiceGenerator() {
       Object.assign(clone.style, {
         position:      "fixed",
         top:           "0",
-        left:          "0",
+        left:          "-9999px",
         width:         "995px",
         height:        "1408px",
         transform:     "none",
-        opacity:       "0",           // invisible — no visual flash
         pointerEvents: "none",
         zIndex:        "-9999",
       });
